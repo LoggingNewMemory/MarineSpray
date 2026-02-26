@@ -1,5 +1,5 @@
 while [ -z "$(getprop sys.boot_completed)" ]; do
-	sleep 30
-    /data/adb/modules/MarineSpray/Marine/AntiHornySpray.sh
+	sleep 5
 done
 
+sh /data/adb/modules/MarineSpray/Marine/AntiHornySpray.sh
