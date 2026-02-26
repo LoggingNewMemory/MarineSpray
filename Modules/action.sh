@@ -1,0 +1,48 @@
+#!/system/bin/sh
+# Magisk Action Script - Updates the Spray
+
+MODDIR=${0%/*}
+CUSTOM_SPRAY="$MODDIR/custom_spray.txt"
+FINAL_SPRAY="$MODDIR/spray.txt"
+TMP_HOSTS="$MODDIR/temp_hosts.txt"
+STEVEN_BLACK_URL="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts"
+
+echo "[*] Loading Marine's Anti-Horny Spray Updater..."
+echo "[*] Checking internet connection..."
+
+if ! ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
+    echo "[!] Error: No internet connection."
+    echo "[!] Repentance requires Wi-Fi. Try again later."
+    exit 1
+fi
+
+echo "[*] Downloading the latest StevenBlack adult blocklist..."
+curl -s -L "$STEVEN_BLACK_URL" -o "$TMP_HOSTS"
+
+if [ -s "$TMP_HOSTS" ]; then
+    echo "[*] Download successful!"
+    
+    # Start fresh with the downloaded list
+    mv "$TMP_HOSTS" "$FINAL_SPRAY"
+    
+    # Append your custom manual domains if the file exists
+    if [ -f "$CUSTOM_SPRAY" ]; then
+        echo "[*] Merging your custom domains..."
+        echo -e "\n# --- Marine's Custom Spray Blocklist ---" >> "$FINAL_SPRAY"
+        cat "$CUSTOM_SPRAY" >> "$FINAL_SPRAY"
+    fi
+    
+    # Apply the new hosts file immediately without needing a reboot
+    echo "[*] Applying new blocklist dynamically..."
+    chmod 644 "$FINAL_SPRAY"
+    umount /system/etc/hosts 2>/dev/null # Unmount old one first just in case
+    mount --bind "$FINAL_SPRAY" /system/etc/hosts
+    
+    echo "[*] Success! You are protected."
+else
+    echo "[!] Error: Download failed. Keeping previous list."
+    rm -f "$TMP_HOSTS"
+fi
+
+echo "[*] Done! Stay pure."
+sleep 3
