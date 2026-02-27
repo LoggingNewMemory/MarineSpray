@@ -10,14 +10,16 @@ STEVEN_BLACK_URL="https://raw.githubusercontent.com/StevenBlack/hosts/master/alt
 echo "[*] Loading Marine's Anti-Horny Spray Updater..."
 echo "[*] Checking internet connection..."
 
-if ! ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
-    echo "[!] Error: No internet connection."
-    echo "[!] Repentance requires Wi-Fi. Try again later."
+# Check DNS resolution
+if ! ping -c 1 -W 2 raw.githubusercontent.com >/dev/null 2>&1; then
+    echo "[!] Error: No internet or DNS is broken."
+    echo "[!] Repentance requires Wi-Fi AND working DNS. Try again later."
     exit 1
 fi
 
 echo "[*] Downloading the latest StevenBlack adult blocklist..."
-curl -s -L "$STEVEN_BLACK_URL" -o "$TMP_HOSTS"
+
+busybox wget -q -O "$TMP_HOSTS" "$STEVEN_BLACK_URL"
 
 if [ -s "$TMP_HOSTS" ]; then
     echo "[*] Download successful!"

@@ -11,17 +11,6 @@ marine_main() {
         chmod 644 "$FINAL_SPRAY"
         mount --bind "$FINAL_SPRAY" /system/etc/hosts
     fi
-
-    # 2. Enforce Safe DNS (OpenDNS FamilyShield)
-    # Block Private DNS (Port 853) so Android doesn't bypass our trap
-    iptables -I OUTPUT -p tcp --dport 853 -j REJECT
-    ip6tables -I OUTPUT -p tcp --dport 853 -j REJECT
-
-    # Redirect all Standard DNS (Port 53) traffic to OpenDNS
-    for dns in 208.67.222.123 208.67.220.123; do
-        iptables -t nat -I OUTPUT -p udp --dport 53 -j DNAT --to-destination "$dns"
-        iptables -t nat -I OUTPUT -p tcp --dport 53 -j DNAT --to-destination "$dns"
-    done
 }
 
 marine_main
