@@ -10,9 +10,9 @@ ui_print "------------------------------------"
 ui_print " "
 sleep 1.5
 
-ui_print "-----------------📱-----------------"
+ui_print "------------------------------------"
 ui_print "            DEVICE INFO             "
-ui_print "-----------------📱-----------------"
+ui_print "------------------------------------"
 ui_print "DEVICE : $(getprop ro.build.product) "
 ui_print "MODEL : $(getprop ro.product.model) "
 ui_print "MANUFACTURE : $(getprop ro.product.system.manufacturer) "
@@ -24,9 +24,9 @@ ui_print "RAM : $(free | grep Mem |  awk '{print $2}') "
 ui_print " "
 sleep 1.5
 
-ui_print "-----------------🗡-----------------"
+ui_print "------------------------------------"
 ui_print "            MODULE INFO             "
-ui_print "-----------------🗡-----------------"
+ui_print "------------------------------------"
 ui_print "Name : Marine Spray"
 ui_print "Version : 3.0"
 ui_print "Support Root : Magisk / KernelSU / APatch"
@@ -42,9 +42,9 @@ set_perm_recursive $MODPATH/Marine 0 0 0774 0774
 
 sleep 1.5
 
-ui_print "-----------------🌐-----------------"
+ui_print "------------------------------------"
 ui_print "      DOWNLOADING BLOCKLIST         "
-ui_print "-----------------🌐-----------------"
+ui_print "------------------------------------"
 
 STEVEN_BLACK_URL="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts"
 DYNAMIC_HOSTS="$MODPATH/dynamic_hosts.txt"
