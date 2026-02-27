@@ -1,8 +1,8 @@
 LATESTARTSERVICE=true
 
-ui_print "🗡--------------------------------🗡"
+ui_print "------------------------------------"
 ui_print "            MARINE SPRAY            " 
-ui_print "🗡--------------------------------🗡"
+ui_print "------------------------------------"
 ui_print "         By: Kanagawa Yamada        "
 ui_print "------------------------------------"
 ui_print "      READ THE TELEGRAM MESSAGE     "
