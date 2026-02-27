@@ -19,9 +19,24 @@ fi
 
 echo "[*] Downloading the latest StevenBlack adult blocklist..."
 
-busybox wget -q -O "$TMP_HOSTS" "$STEVEN_BLACK_URL"
+attempt=1
+max_attempts=3
+success=0
 
-if [ -s "$TMP_HOSTS" ]; then
+while [ $attempt -le $max_attempts ]; do
+    echo "[*] Attempt $attempt of $max_attempts..."
+    busybox wget -q -O "$TMP_HOSTS" "$STEVEN_BLACK_URL"
+    
+    if [ -s "$TMP_HOSTS" ]; then
+        success=1
+        break
+    fi
+    
+    attempt=$((attempt + 1))
+    sleep 2
+done
+
+if [ $success -eq 1 ]; then
     echo "[*] Download successful!"
     
     # Start fresh with the downloaded list
@@ -37,12 +52,12 @@ if [ -s "$TMP_HOSTS" ]; then
     # Apply the new hosts file immediately without needing a reboot
     echo "[*] Applying new blocklist dynamically..."
     chmod 644 "$FINAL_SPRAY"
-    umount /system/etc/hosts 2>/dev/null # Unmount old one first just in case
+    umount /system/etc/hosts 2>/dev/null
     mount --bind "$FINAL_SPRAY" /system/etc/hosts
     
     echo "[*] Success! You are protected."
 else
-    echo "[!] Error: Download failed. Keeping previous list."
+    echo "[!] Error: Download failed after 3 attempts. Keeping previous list."
     rm -f "$TMP_HOSTS"
 fi
 

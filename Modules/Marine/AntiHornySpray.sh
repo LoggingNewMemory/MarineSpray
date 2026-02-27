@@ -1,7 +1,7 @@
 #!/system/bin/sh
 # Marine's Anti-Horny Spray Module - Enforcer
 
-MODULE_DIR="/data/adb/modules/MarineSpray/Marine"
+MODULE_DIR="/data/adb/modules/MarineSpray"
 FINAL_SPRAY="$MODULE_DIR/spray.txt"
 
 marine_main() {
@@ -9,6 +9,7 @@ marine_main() {
     # Bind mount the pre-existing spray.txt over the system hosts file
     if [ -f "$FINAL_SPRAY" ]; then
         chmod 644 "$FINAL_SPRAY"
+        umount /system/etc/hosts 2>/dev/null
         mount --bind "$FINAL_SPRAY" /system/etc/hosts
     fi
 }
