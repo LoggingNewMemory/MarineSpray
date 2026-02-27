@@ -47,7 +47,7 @@ ui_print "      DOWNLOADING BLOCKLIST         "
 ui_print "------------------------------------"
 
 STEVEN_BLACK_URL="https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-only/hosts"
-DYNAMIC_HOSTS="$MODPATH/dynamic_hosts.txt"
+DYNAMIC_HOSTS="$MODPATH/spray.txt"
 
 attempt=1
 max_attempts=3
